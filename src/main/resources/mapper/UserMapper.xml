@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zc.webstu.dao.UserMapper">
+    <resultMap type="com.zc.webstu.bean.User" id="UserResult">
+        <id property="userId" column="u_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="u_name" jdbcType="VARCHAR"/>
+        <result property="userPwd" column="u_pwd" jdbcType="VARCHAR"/>
+        <result property="roleId" column="u_role_id" jdbcType="VARCHAR"/>
+        <result property="hasMoney" column="u_has_money" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--获取USER-->
+    <select id="selectUserById" parameterType="java.lang.String" resultMap="UserResult">
+        select * from tb_webstu_user where u_id = #{userId}
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        update tb_webstu_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userName != null  and userName != ''  ">u_name = #{userName},</if>
+            <if test="userPwd != null  and userPwd != ''  ">u_pwd = #{userPwd},</if>
+            <if test="roleId != null  and roleId != ''  ">u_role_id = #{roleId},</if>
+            <if test="hasMoney != null  and hasMoney != ''  ">u_has_money = #{hasMoney},</if>
+        </trim>
+        where u_id = #{userId}
+    </update>
+</mapper>

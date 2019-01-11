@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zc.webstu.dao.BookMapper">
+    <resultMap type="com.zc.webstu.bean.Book" id="BookResult">
+        <id property="bookId" column="b_id" jdbcType="VARCHAR"/>
+        <result property="bookName" column="b_name" jdbcType="VARCHAR"/>
+        <result property="bookContent" column="b_content" jdbcType="VARCHAR"/>
+        <result property="value" column="b_value" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getAllBook" resultMap="BookResult">
+        select * from tb_webstu_book
+    </select>
+
+    <select id="selectBookById" parameterType="java.lang.String" resultMap="BookResult">
+        select * from tb_webstu_book where b_id = #{bookId}
+    </select>
+
+    <update id="updateBook" parameterType="book">
+        update tb_webstu_book
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bookName != null  and bookName != ''  ">b_name = #{bookName},</if>
+            <if test="bookContent != null  and bookContent != ''  ">b_content = #{bookContent},</if>
+            <if test="value != null  and value != ''  ">b_value = #{value},</if>
+        </trim>
+        where b_id = #{bookId}
+    </update>
+
+    <insert id="insertBook" parameterType="book">
+        insert into tb_webstu_book (b_id, b_name, b_content, b_value)
+        values (#{bookId},#{bookName},#{bookContent},#{value});
+    </insert>
+
+    <delete id="delBookById" parameterType="String">
+        DELETE FROM tb_webstu_book
+        WHERE b_id = #{bookId}
+    </delete>
+
+</mapper>

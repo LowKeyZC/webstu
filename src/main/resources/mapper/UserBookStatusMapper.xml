@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.zc.webstu.dao.UserBookStatusMapper">
+    <resultMap type="com.zc.webstu.bean.UserBookStatus" id="UBSResult">
+        <id property="ubId" column="ub_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="ub_user_id" jdbcType="VARCHAR"/>
+        <result property="bookId" column="ub_book_id" jdbcType="VARCHAR"/>
+        <result property="status" column="ub_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectUBSByUidMVid" parameterType="java.lang.String" resultMap="UBSResult">
+        select * from tb_webstu_user_book_status
+        where ub_user_id = #{userId} and ub_book_id = #{bookId}
+    </select>
+
+    <insert id="insertUBS" parameterType="UserBookStatus">
+        insert into tb_webstu_user_book_status (ub_id, ub_user_id, ub_book_id, ub_status)
+        values (#{ubId},#{userId},#{bookId},#{status});
+    </insert>
+
+</mapper>
