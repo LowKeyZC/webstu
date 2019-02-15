@@ -1,0 +1,19 @@
+server:
+    port: 9000
+
+# 注册中心
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://127.0.0.1:8761/eureka/
+
+zuul:
+    routes:
+        # 服务-路径映射
+        user-cloud: /gateway-user/**
+        book-cloud: /gateway-book/**
+        order-cloud: /gateway-order/**
+    # 屏蔽路径正则
+    ignored-patterns: /*-cloud/**
+    # 屏蔽服务
+    ignored-services: user-cloud,book-cloud,order-cloud
